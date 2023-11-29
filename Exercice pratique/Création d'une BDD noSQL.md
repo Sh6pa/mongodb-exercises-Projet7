@@ -78,9 +78,10 @@ Ressource utile : https://www.mongodb.com/docs/manual/core/map-reduce/ https://w
 
 - Utilisez l'agrégation pour regrouper les utilisateurs par adresse et compter combien d'utilisateurs ont la même adresse.
  
-`Votre réponse..`
+`Votre réponse..` 
 
 - En considérant le fait que MongoDB dispatch ses données sur plusieurs serveurs, en quoi cette méthode "d'agrégation" permet à MongoDB de travailler efficacement ?
 
-`Votre réponse..`
+
+`Votre réponse..` Car elle permet de joindre les données des différents fichier pour les agréger uniquement les données nécessaire en clé/valeur. On ne va demander d'extraire au fichier uniquement les données demandée (donc uniquement dans ce cas là l'adresse des utilisateurs, plus de rapidité et moins de transit de donné). Avec ce nouveau jeu Clé/Valeur, clé étant la valeur obtenu du fichier et la nouvelle valeur 1 afin de pouvoir cumuler les opérations simple et rapide pour l'ordinateur (faire des moyennes/sommes).
 
