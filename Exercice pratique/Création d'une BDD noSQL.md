@@ -51,22 +51,24 @@ Ci-dessous, vous pouvez consulter la base de données d'un service de livraison 
 
 - Écrivez une requête pour récupérer tous les utilisateurs de la collection "utilisateurs".
 
-`Votre réponse..`
+`Votre réponse..` db.utilisateurs.find();
 
 - Écrivez une requête pour récupérer toutes les commandes datées du 16 janvier 2023. À grande echelle, cette requête est-elle efficace ? Pourquoi ?
 
-`Votre réponse..`
+`Votre réponse..` db.commandes.find({ "Date de commande" : { "$gte" : ISODate("2023-01-16T00:00:00Z"), "$lte" : ISODate("2023-01-16T23:59:59Z") }})
 
 #### Mise à jour de données
 
 - Modifiez le document d'un utilisateur pour mettre à jour son adresse e-mail (choisissez une nouvelle adresse mail).
-- Modifiez le document du restaurand Sushi Express pour ajouter un champ "fermeture" avec la date du "01/12/2023". Une opération pareille aurait-elle été possible en SQL ?
+- Modifiez le document du restaurant Sushi Express pour ajouter un champ "fermeture" avec la date du "01/12/2023". Une opération pareille aurait-elle été possible en SQL ?
 
-`Votre réponse..`
+`Votre réponse..` 
+db.utilisateurs.updateOne({"Adresse e-mail": "claude.martin@email.com"}, {$set: {"Adresse e-mail": "456AvenuedesFleurs@email.com"}})
+db.restaurants.update({ "Nom du restaurant": "Sushi Express" }, { $set: {"fermeture": "01/12/2023" }}, { upsert: 1 })
 
 - Supprimez le restaurant Sushi-express. Remarquez-vous une incohérence dans l'ensemble de base de donnée ?
 
-`Votre réponse..`
+`Votre réponse..` db.restaurants.deleteOne({ "Nom du restaurant": "Sushi Express" })
 
 #### Agrégation de données
 Ressource utile : https://www.mongodb.com/docs/manual/core/map-reduce/ https://www.youtube.com/watch?v=cHGaQz0E7AU https://www.youtube.com/watch?v=fEACZP_878Y
