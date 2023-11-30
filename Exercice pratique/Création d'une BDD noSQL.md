@@ -51,11 +51,15 @@ Ci-dessous, vous pouvez consulter la base de données d'un service de livraison 
 
 - Écrivez une requête pour récupérer tous les utilisateurs de la collection "utilisateurs".
 
-`Votre réponse..` db.utilisateurs.find();
+`Votre réponse..` 
+
+    db.utilisateurs.find();
 
 - Écrivez une requête pour récupérer toutes les commandes datées du 16 janvier 2023. À grande echelle, cette requête est-elle efficace ? Pourquoi ?
 
-`Votre réponse..` db.commandes.find({ "Date de commande" : { "$gte" : ISODate("2023-01-16T00:00:00Z"), "$lte" : ISODate("2023-01-16T23:59:59Z") }})
+`Votre réponse..` 
+
+    db.commandes.find({ "Date de commande" : { "$gte" : ISODate("2023-01-16T00:00:00Z"), "$lte" : ISODate("2023-01-16T23:59:59Z") }})
 
 #### Mise à jour de données
 
@@ -63,12 +67,22 @@ Ci-dessous, vous pouvez consulter la base de données d'un service de livraison 
 - Modifiez le document du restaurant Sushi Express pour ajouter un champ "fermeture" avec la date du "01/12/2023". Une opération pareille aurait-elle été possible en SQL ?
 
 `Votre réponse..` 
-db.utilisateurs.updateOne({"Adresse e-mail": "claude.martin@email.com"}, {$set: {"Adresse e-mail": "456AvenuedesFleurs@email.com"}})
-db.restaurants.update({ "Nom du restaurant": "Sushi Express" }, { $set: {"fermeture": "01/12/2023" }}, { upsert: 1 })
+
+    db.utilisateurs.updateOne({"Adresse e-mail": "claude.martin@email.com"}, {$set: {"Adresse e-mail": "456AvenuedesFleurs@email.com"}})
+
+    db.restaurants.update({ "Nom du restaurant": "Sushi Express" }, { $set: {"fermeture": "01/12/2023" }}, { upsert: 1 })
+
+    Ajouter un champs en sql est possible, seulement on aurait dû ajouter ce champs comme collone et donc à touts les éléments, opération donc très coûteuses si la base de donnée est grande ainsi que la difficulté de devoir initialiser cette valeur.
 
 - Supprimez le restaurant Sushi-express. Remarquez-vous une incohérence dans l'ensemble de base de donnée ?
 
-`Votre réponse..` db.restaurants.deleteOne({ "Nom du restaurant": "Sushi Express" })
+`Votre réponse..` 
+
+`Vérifier la justification #spéculations pure`
+
+    db.restaurants.deleteOne({ "Nom du restaurant": "Sushi Express" })
+
+    Non, il reste bien les autres restaurants qui n'ont donc pas le champs fermeture. 
 
 #### Agrégation de données
 Ressource utile : https://www.mongodb.com/docs/manual/core/map-reduce/ https://www.youtube.com/watch?v=cHGaQz0E7AU https://www.youtube.com/watch?v=fEACZP_878Y
@@ -76,12 +90,18 @@ Ressource utile : https://www.mongodb.com/docs/manual/core/map-reduce/ https://w
  
 `Votre réponse..`
 
+    db.produits.aggregate([{$group: {_id:null, averageCost: {$avg:"$Prix"}}} ])
+
 - Utilisez l'agrégation pour regrouper les utilisateurs par adresse et compter combien d'utilisateurs ont la même adresse.
  
 `Votre réponse..` 
 
+    db.utilisateurs.aggregate([ { $group: { _id: "$Adresse", count: { $sum: 1}}}, { $sort: { count: -1 }} ])
+
 - En considérant le fait que MongoDB dispatch ses données sur plusieurs serveurs, en quoi cette méthode "d'agrégation" permet à MongoDB de travailler efficacement ?
 
 
-`Votre réponse..` Car elle permet de joindre les données des différents fichier pour les agréger uniquement les données nécessaire en clé/valeur. On ne va demander d'extraire au fichier uniquement les données demandée (donc uniquement dans ce cas là l'adresse des utilisateurs, plus de rapidité et moins de transit de donné). Avec ce nouveau jeu Clé/Valeur, clé étant la valeur obtenu du fichier et la nouvelle valeur 1 afin de pouvoir cumuler les opérations simple et rapide pour l'ordinateur (faire des moyennes/sommes).
+`Votre réponse..` 
+    
+    Car elle permet de joindre les données des différents fichier pour les agréger uniquement les données nécessaire en clé/valeur. On ne va demander d'extraire au fichier uniquement les données demandée (donc uniquement dans ce cas là l'adresse des utilisateurs, plus de rapidité et moins de transit de donné). Avec ce nouveau jeu Clé/Valeur, clé étant la valeur obtenu du fichier et la nouvelle valeur 1 afin de pouvoir cumuler les opérations simple et rapide pour l'ordinateur (faire des moyennes/sommes).
 
