@@ -72,13 +72,11 @@ Ci-dessous, vous pouvez consulter la base de données d'un service de livraison 
 
     db.restaurants.update({ "Nom du restaurant": "Sushi Express" }, { $set: {"fermeture": "01/12/2023" }}, { upsert: 1 })
 
-    Ajouter un champs en sql est possible, seulement on aurait dû ajouter ce champs comme collone et donc à touts les éléments, opération donc très coûteuses si la base de donnée est grande ainsi que la difficulté de devoir initialiser cette valeur.
+    Ajouter un champs en sql est possible, cependant on aurait dû ajouter ce champs comme colonne et donc à tous les éléments, une opération donc très coûteuse si la base de donnée est grande ainsi que la difficulté de devoir initialiser cette valeur.
 
 - Supprimez le restaurant Sushi-express. Remarquez-vous une incohérence dans l'ensemble de base de donnée ?
 
 `Votre réponse..` 
-
-`Vérifier la justification #spéculations pure`
 
     db.restaurants.deleteOne({ "Nom du restaurant": "Sushi Express" })
 
@@ -103,5 +101,5 @@ Ressource utile : https://www.mongodb.com/docs/manual/core/map-reduce/ https://w
 
 `Votre réponse..` 
     
-    Car elle permet de joindre les données des différents fichier pour les agréger uniquement les données nécessaire en clé/valeur. On ne va demander d'extraire au fichier uniquement les données demandée (donc uniquement dans ce cas là l'adresse des utilisateurs, plus de rapidité et moins de transit de donné). Avec ce nouveau jeu Clé/Valeur, clé étant la valeur obtenu du fichier et la nouvelle valeur 1 afin de pouvoir cumuler les opérations simple et rapide pour l'ordinateur (faire des moyennes/sommes).
+    Car elle permet de joindre les données des différents fichiers pour agréger uniquement les données nécessaire en clé/valeur. On ne va demander d'extraire au fichier uniquement les données demandées (donc uniquement dans ce cas là l'adresse des utilisateurs, plus de rapidité et moins de transit de donné). Avec ce nouveau jeu Clé/Valeur, clé étant la valeur obtenu du fichier et la nouvelle valeur 1 afin de pouvoir cumuler les opérations simples et rapides pour l'ordinateur (faire des moyennes/sommes).
 
