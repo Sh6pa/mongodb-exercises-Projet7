@@ -60,6 +60,7 @@ Ci-dessous, vous pouvez consulter la base de données d'un service de livraison 
 `Votre réponse..` 
 
     db.commandes.find({ "Date de commande" : { "$gte" : ISODate("2023-01-16T00:00:00Z"), "$lte" : ISODate("2023-01-16T23:59:59Z") }})
+    Puisque que  les documents sont indéxé, la requète même à grande échelle si elle n'a pas trop de résultats à retourner reste efficace.
 
 #### Mise à jour de données
 
